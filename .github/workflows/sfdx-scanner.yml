@@ -1,0 +1,36 @@
+# Unique name for this workflow
+name: PR SFDX Scanner
+# Definition when the workflow should run
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [edited, opened, synchronize, reopened, review_requested]
+    paths:
+      - 'sfdx-source/**'
+      - 'pmd/**'
+      - '.github/workflows/sfdx-scanner.yml'
+      #- 'package.json'
+
+# Jobs to be executed
+jobs:
+  sfdx-scanner:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    steps:
+      # Checkout the source code
+      - name: 'Checkout source code'
+        uses: actions/checkout@v4
+
+      - name: Install SFDX CLI and Scanner
+        run: |
+          npm install @salesforce/cli --global
+          sf plugins install @salesforce/sfdx-scanner
+
+      - name: Run SFDX Scanner
+        uses: mitchspano/sfdx-scan-pull-request@v0.1.15
+        with:
+          pmdconfig: 'pmd/deployRules.xml'
+          severity-threshold: 2
+          engine: 'pmd'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

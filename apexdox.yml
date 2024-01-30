@@ -1,0 +1,38 @@
+engine:
+  source:
+    - path: '${workspaceFolder}/sfdx-source'
+      sourceUrl: https://github.com/dschach/CustomMetadataLoader/blob/main
+  targetDirectory: '${workspaceFolder}/docs'
+  # excludes:
+  #   - '*Test.cls'
+  title: Custom Metadata Loader Documentation
+  subtitle: for <a target="_blank" rel="noopener noreferrer" href="https://github.com/dschach/CustomMetadataLoader">Custom Metadata Loader</a>
+  sortOrder: alpha
+  cleanDir: true
+  showTOCSnippets: true
+  scope:
+    - global
+    - public
+    #- protected
+    - private
+    #- webService
+    - testMethod
+  homePagePath: '${workspaceFolder}/doc-assets/main.html'
+  pages:
+    - '${workspaceFolder}/doc-assets/files/installation.html'
+    - '${workspaceFolder}/doc-assets/files/changelog.html'
+  assets:
+    - '${workspaceFolder}/doc-assets/logo.png'
+    - '${workspaceFolder}/doc-assets/favicon.png'
+    - '${workspaceFolder}/doc-assets/icon.png'
+    - '${workspaceFolder}/doc-assets/index.css'
+    - '${workspaceFolder}/doc-assets/highlight.css'
+    - '${workspaceFolder}/doc-assets/styling.css'
+    - '${workspaceFolder}/doc-assets/highlight.js'
+    - '${workspaceFolder}/doc-assets/index.js'
+
+  port: 8088
+docblock:
+  alignItems: true
+  spacious: true
+  omitDescriptionTag: true

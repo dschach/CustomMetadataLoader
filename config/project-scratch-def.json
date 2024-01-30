@@ -1,5 +1,26 @@
 {
-  "orgName": "dschach company",
-  "edition": "Developer",
-  "features": []
+	"orgName": "DSchach CML",
+	"edition": "Developer",
+	"features": ["EnableSetPasswordInApi"],
+	"hasSampleData": true,
+	"settings": {
+		"lightningExperienceSettings": {
+			"enableS1DesktopEnabled": true
+		},
+		"mobileSettings": {
+			"enableS1EncryptedStoragePref2": false
+		},
+		"quoteSettings": {
+			"enableQuote": false
+		},
+		"orderManagementSettings": { "enableOrderManagement": false },
+		"orderSettings": { "enableOrders": false },
+		"userManagementSettings": {
+			"permsetsInFieldCreation": true,
+			"enableEnhancedPermsetMgmt": true
+		},
+		"entitlementSettings": { "enableEntitlements": false },
+		"fieldServiceSettings": { "fieldServiceOrgPref": false, "enableWorkOrders": false },
+		"partyDataModelSettings": { "enableConsentManagement": false }
+	}
 }

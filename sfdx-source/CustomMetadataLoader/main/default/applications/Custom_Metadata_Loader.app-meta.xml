@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#0070D2</headerColor>
+        <logo>logo_hm_summ_nosoftware</logo>
+        <logoVersion>1</logoVersion>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <description>Custom metadata record loader from a CSV file or existing records.</description>
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <label>Custom Metadata Loader</label>
+    <navType>Standard</navType>
+    <tabs>standard-home</tabs>
+    <tabs>Custom_Metadata_Loader</tabs>
+    <tabs>CMT_Migrator</tabs>
+    <uiType>Lightning</uiType>
+    <utilityBar>Custom_Metadata_Loader_UtilityBar</utilityBar>
+</CustomApplication>

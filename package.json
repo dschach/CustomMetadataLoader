@@ -1,0 +1,50 @@
+{
+	"name": "custom-metadata-loader",
+	"private": true,
+	"version": "1.0.1",
+	"description": "Custom Metadata Loader builds on Forcedotcom work and uses updated code methods to work even better.",
+	"scripts": {
+		"apex:test": "rm -rf testresults/* && sf apex run test --test-level RunLocalTests --output-dir testresults --result-format human --code-coverage --synchronous --detailed-coverage",
+		"build": ". scripts/packagedev/build.sh",
+		"docs:setup": ". doc-assets/setupApexDox.sh",
+		"docs:commit": ". doc-assets/commitApexDox.sh",
+		"myinfo": "sf org display --verbose",
+		"pmd:scan:csv": "$HOME/pmd/bin/pmd check --dir sfdx-source/CustomMetadataLoader --rulesets pmd/ruleset.xml --format csv --report-file pmd/pmd.csv --cache .pmdCache",
+		"pmd:scan:deploy:csv": "$HOME/pmd/bin/pmd check --dir sfdx-source/CustomMetadataLoader --rulesets pmd/deployRules.xml --format csv --report-file pmd/pmd.csv --cache .pmdCache",
+		"precommit": "lint-staged",
+		"prepare": "husky install",
+		"prettier:apex": "prettier --write \"sfdx-source/**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,yaml,yml}\"",
+		"prettier:docs": "prettier --write \"doc*/**/*.html\"",
+		"prettier:verify:apex": "prettier --check \"sfdx-source/**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,yaml,yml}\"",
+		"prettier:verify": "prettier --check \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
+		"prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
+		"release:preview": "branch=$(git symbolic-ref --short -q HEAD) && release-please release-pr --token=$GITHUB_TOKEN --repo-url=dschach/CustomMetadataLoader --dry-run --debug --target-branch=$branch",
+		"scan": ". scripts/packagedev/scan.sh",
+		"scan:security": "sf scanner run -t sfdx-source --category=\"Security\" -o scanner/CodeAnalyzerGeneral.csv --format=csv",
+		"scan:dfa": "sf scanner run dfa -t sfdx-source --category=\"Security\" -o scanner/CodeAnalyzerDFA.csv --format=csv --projectdir=.",
+		"setup:docs": ". doc-assets/setupApexDox.sh",
+		"scratchorg": ". scripts/scratchorgs/scratchorg.sh",
+		"updateHighlight": ". doc-assets/updateHighlight.sh",
+		"x2oddevhub": "sf config set target-dev-hub=x2od"
+	},
+	"devDependencies": {
+		"@prettier/plugin-xml": "^3.2.2",
+		"@types/node": "^20.11.11",
+		"husky": "^9.0.7",
+		"lint-staged": "^15.2.0",
+		"marked": "^11.2.0",
+		"prettier": "^3.2.4",
+		"prettier-plugin-apex": "^2.0.1"
+	},
+	"lint-staged": {
+		"sfdx-source/**/*.{cls,cmp,component,css,js,json,md,page,trigger,yaml,yml}": [
+			"prettier --write"
+		],
+		"docs/assets/*.css": [
+			"prettier --write"
+		],
+		"*.html": [
+			"prettier --write --tab-width 2"
+		]
+	}
+}

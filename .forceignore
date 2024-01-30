@@ -10,3 +10,21 @@ package.xml
 
 # LWC Jest
 **/__tests__/**
+
+# Admin profile
+*.profile-meta.xml
+Admin.*
+
+# Other permission sets
+*.permissionset-meta.xml
+!Custom_Metadata_Loader.permissionset-meta.xml
+
+# Page Layouts
+#**/*.layout-meta.xml
+
+# Settings
+**/*.settings-meta.xml
+
+# AppSwitcher
+**/*.appMenu-meta.xml
+**/*.indx-meta.xml

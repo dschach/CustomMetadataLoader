@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CountryCode__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>Abbreviation/Code (unique)</description>
+    <externalId>true</externalId>
+    <label>Country Code</label>
+    <length>3</length>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

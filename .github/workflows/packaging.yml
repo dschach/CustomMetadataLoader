@@ -1,0 +1,89 @@
+# Unique name for this workflow
+name: Packaging
+
+# Definition when the workflow should run
+on:
+  workflow_dispatch:
+
+  release:
+    types: [released]
+
+# Jobs to be executed
+jobs:
+  packaging:
+    runs-on: ubuntu-latest
+    steps:
+      # Install Salesforce CLI
+      - name: 'Install Salesforce sf CLI'
+        run: |
+          npm install @salesforce/cli --global
+          sf --version
+      # Checkout the code in the pull request
+      - name: 'Checkout source code'
+        uses: actions/checkout@v4
+        with:
+          ref: 'main'
+
+      # Store secret for dev hub
+      - name: 'Populate auth file with DEVHUB_SFDX_URL secret'
+        shell: bash
+        run: 'echo ${{ secrets.DEVHUB_SFDX_URL}} > ./DEVHUB_SFDX_URL.txt'
+
+      # Authenticate dev hub
+      - name: 'Authenticate Dev Hub'
+        run: 'sf org login sfdx-url --sfdx-url-file ./DEVHUB_SFDX_URL.txt --alias devhub --set-default-dev-hub'
+
+      # Remove auth file
+      - name: Remove auth file
+        run: rm -f ./DEVHUB_SFDX_URL.txt
+
+      # Add namespace to project config
+      - name: Add namespace to project config
+        run: |
+          sed -i 's,"namespace": "","namespace": "",' sfdx-project.json
+
+      # Update release number in sfdx-project.json
+      - name: Update Package number in sfdx-project.json
+        run: |
+          versionNumber="${{ github.event.release.tag_name }}"
+          versionName="${{ github.event.release.name }}"
+          versionNameRegex="\"versionName\": \".*\""
+          versionNumberRegex="\"versionNumber\": \"[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.NEXT\""
+          newVersionName="\"versionName\": \"${versionName}\""
+          newVersionNumber="\"versionNumber\": \"${versionNumber/v/}.NEXT\""
+          sed -i -E "s,${versionNameRegex},${newVersionName}," sfdx-project.json
+          sed -i -E "s,${versionNumberRegex},${newVersionNumber}," sfdx-project.json
+
+      # Create package version and extract its id
+      - name: Create package version
+        id: create-package-version
+        run: |
+          set +e
+          json=$(sf package version create --code-coverage --package CustomMetadataLoader --path sfdx-source/CustomMetadataLoader --installationkeybypass --wait 20 --json)
+          echo $json
+          status=$(echo $json | jq '.status')
+          if [ $status == "0" ]; then
+              packageVersionId=$(echo $json | jq '.result.SubscriberPackageVersionId')
+              echo "::set-output name=packageVersionId::$packageVersionId"
+          else
+              echo "sf package version create failed"
+          fi
+          exit $status
+
+      # Update sfdx-project.json and README to use only latest package version
+      - name: 'Update sfdx-project.json and README'
+        id: packaging-updater
+        uses: trailheadapps/github-action-sfdx-packaging-updater@main
+
+      # Remove namespace from project config
+      - name: Remove namespace from project config
+        run: |
+          sed -i 's,"namespace": "","namespace": "",' sfdx-project.json
+
+      # Update sfdx-project.json
+      - name: 'Commit changes'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore(packaging): created new package version'
+          file_pattern: sfdx-project.json README.md
+          push_options: --force

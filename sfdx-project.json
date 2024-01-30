@@ -1,13 +1,30 @@
 {
-  "packageDirectories": [
-    {
-      "path": "force-app",
-      "default": true,
-      "versionNumber": "0.0.1.NEXT"
-    }
-  ],
-  "name": "CustomMetadataLoader",
-  "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "59.0"
+	"packageDirectories": [
+		{
+			"path": "sfdx-source/CustomMetadataLoader",
+			"package": "Custom Metadata Loader",
+			"default": true,
+			"versionNumber": "0.0.1.NEXT",
+			"versionName": "Initial release",
+			"versionDescription": "first release",
+			"releaseNotesUrl": "https://dschach.github.io/CustomMetadataLoader/changelog.html",
+			"postInstallUrl": "apex/Config",
+			"definitionFile": "config/package-scratch-def.json",
+			"unpackagedMetadata": {
+				"path": "sfdx-source/unpackaged"
+			},
+			"apexTestAccess": {
+				"permissionSets": ["Custom_Metadata_Loader"]
+			}
+		},
+		{
+			"path": "sfdx-source/unpackaged",
+			"default": false
+		}
+	],
+	"name": "CustomMetadataLoader",
+	"namespace": "",
+	"sfdcLoginUrl": "https://login.salesforce.com",
+	"sourceApiVersion": "59.0",
+	"packageAliases": {}
 }
