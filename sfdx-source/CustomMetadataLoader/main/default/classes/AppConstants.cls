@@ -22,6 +22,8 @@ public class AppConstants {
 		LABEL_ATTRIBUTE +
 		'.';
 
+	public static final String API_VERSION = '59.0';
+
 	// Do not change value for ERROR_UNAUTHORIZED_ENDPOINT
 	public static final String ERROR_UNAUTHORIZED_ENDPOINT = 'Unauthorized endpoint. Please check Setup';
 }

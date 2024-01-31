@@ -18333,7 +18333,7 @@ public class MetadataService {
 		private String[] field_order_type_info = new List<String>{ 'criteriaBasedRules', 'ownerRules' };
 	}
 	public class MetadataPort {
-		public String endpoint_x = URL.getCurrentRequestUrl().toExternalForm() + '/services/Soap/m/59.0';
+		public String endpoint_x = URL.getOrgDomainURL().toExternalForm() + '/services/Soap/m/' + AppConstants.API_VERSION;
 		public Map<String, String> inputHttpHeaders_x;
 		public Map<String, String> outputHttpHeaders_x;
 		public String clientCertName_x;
