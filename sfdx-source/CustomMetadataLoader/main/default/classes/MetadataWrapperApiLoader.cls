@@ -78,7 +78,7 @@ public with sharing class MetadataWrapperApiLoader extends MetadataLoader {
 
 			String cmdName = mappingInfo.getCustomMetadadataTypeName();
 			Map<String, Schema.DescribeFieldResult> descFieldResultMap = mappingInfo.getSrcFieldResultMap();
-			Map<String, String> srcTgtFieldsMap = mappingInfo.getCSToMDT_fieldMapping();
+			Map<String, String> srcTgtFieldsMap = mappingInfo.getCSToMDTFieldMapping();
 
 			MetadataService.Metadata[] customMetadataRecords = new List<MetadataService.Metadata>(mappingInfo.getRecordList().size());
 			Map<String, String> fieldsAndValues = new Map<String, String>();

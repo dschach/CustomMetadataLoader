@@ -4,12 +4,13 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root  or https://opensource.org/licenses/BSD-3-Clause
  */
+@SuppressWarnings('PMD.LocalVariableNamingConventions')
 public with sharing class MetadataObjectCreator {
 	private static MetadataService.MetadataPort service = MetadataUtil.getPort();
 	// Supported data types during migration. If source custom setting or
 	// source custom object has extra data types than below map, it will
 	// not work. You can always use custom mapping approach in that case.
-	public static final Map<DisplayType, String> displayTypeToTypeMap = new Map<DisplayType, String>{
+	public static final Map<DisplayType, String> DISPLAY_TYPE_TO_TYPE_MAP = new Map<DisplayType, String>{
 		DisplayType.Boolean => 'Checkbox',
 		DisplayType.Date => 'Date',
 		DisplayType.DateTime => 'DateTime',
@@ -36,7 +37,7 @@ public with sharing class MetadataObjectCreator {
 			pluralLabel = pluralLabel + 's';
 
 			MetadataService.CustomObject customObject = new MetadataService.CustomObject();
-			customObject.fullName = fullName;
+			customObject.fullName = strippedLabel;
 			customObject.label = label;
 			customObject.pluralLabel = pluralLabel;
 			List<MetadataService.SaveResult> results = service.createMetadata(new List<MetadataService.Metadata>{ customObject });
@@ -61,13 +62,13 @@ public with sharing class MetadataObjectCreator {
 
 			List<MetadataService.CustomField> customFields = new List<MetadataService.CustomField>();
 			integer counter = 0;
-			for (String csField : mappingInfo.getCSToMDT_fieldMapping().keySet()) {
-				if (mappingInfo.getCSToMDT_fieldMapping().get(csField).endsWith('__c')) {
+			for (String csField : mappingInfo.getCSToMDTFieldMapping().keySet()) {
+				if (mappingInfo.getCSToMDTFieldMapping().get(csField).endsWith('__c')) {
 					Schema.DescribeFieldResult descFieldResult = descFieldResultMap.get(csField.toLowerCase());
-					String cmtField = mappingInfo.getCSToMDT_fieldMapping().get(csField);
-					fieldFullName = fullName + '.' + cmtField;
+					String cmtField = mappingInfo.getCSToMDTFieldMapping().get(csField);
+					fieldFullName = strippedLabel + '.' + cmtField;
 					label = descFieldResult.getLabel();
-					type_x = displayTypeToTypeMap.get(descFieldResult.getType());
+					type_x = DISPLAY_TYPE_TO_TYPE_MAP.get(descFieldResult.getType());
 
 					MetadataService.CustomField customField = new MetadataService.CustomField();
 					customFields.add(customField);
@@ -138,13 +139,13 @@ public with sharing class MetadataObjectCreator {
 	 **/
 	private static void handleSaveResults(MetadataService.SaveResult saveResult) {
 		// Nothing to see?
-		if (saveResult == null || saveResult.success)
+		if (saveResult == null || saveResult.success) {
 			return;
-		// Construct error message and throw an exception
+		} // Construct error message and throw an exception
 		if (saveResult.errors != null) {
 			List<String> messages = new List<String>();
 			messages.add((saveResult.errors.size() == 1 ? 'Error ' : 'Errors ') + 'occurred processing component ' + saveResult.fullName + '.');
-			for (MetadataService.Error error : saveResult.errors)
+			for (MetadataService.Error error : saveResult.errors) {
 				messages.add(
 					error.message +
 						' (' +
@@ -152,10 +153,13 @@ public with sharing class MetadataObjectCreator {
 						').' +
 						(error.fields != null && error.fields.size() > 0 ? ' Fields ' + String.join(error.fields, ',') + '.' : '')
 				);
-			if (messages.size() > 0)
+			}
+			if (messages.size() > 0) {
 				throw new MetadataMigrationException(String.join(messages, ' '));
+			}
 		}
-		if (!saveResult.success)
+		if (!saveResult.success) {
 			throw new MetadataMigrationException(System.Label.ERROR_REQUEST_FAILED_NO_ERROR);
+		}
 	}
 }

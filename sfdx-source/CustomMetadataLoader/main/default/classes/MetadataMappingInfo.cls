@@ -14,7 +14,7 @@ public with sharing class MetadataMappingInfo {
 	private List<sObject> recordList;
 	private Map<String, Schema.DescribeFieldResult> srcFieldResultMap;
 
-	private Map<String, String> csToMDT_fieldMapping = new Map<String, String>();
+	private Map<String, String> csToMDTFieldMapping = new Map<String, String>();
 
 	public MetadataMappingInfo() {
 		standardFields.add(AppConstants.DEV_NAME_ATTRIBUTE);
@@ -42,12 +42,12 @@ public with sharing class MetadataMappingInfo {
 		this.recordList = records;
 	}
 
-	public Map<String, String> getCSToMDT_fieldMapping() {
-		return this.csToMDT_fieldMapping;
+	public Map<String, String> getCSToMDTFieldMapping() {
+		return this.csToMDTFieldMapping;
 	}
 
-	public void setCSToMDT_fieldMapping(Map<String, String> csToMDT_fieldMapping) {
-		this.csToMDT_fieldMapping = csToMDT_fieldMapping;
+	public void setCSToMDTFieldMapping(Map<String, String> csToMDTFieldMapping) {
+		this.csToMDTFieldMapping = csToMDTFieldMapping;
 	}
 
 	public String getCustomSettingName() {

@@ -93,6 +93,6 @@ public with sharing class MetadataMapperCustom extends MetadataMapperDefault {
 	 *
 	 * */
 	public override void mapSourceTarget() {
-		mappingInfo.setCSToMDT_fieldMapping(this.fieldsMap);
+		mappingInfo.setCSToMDTFieldMapping(this.fieldsMap);
 	}
 }

@@ -80,12 +80,12 @@ public with sharing class MetadataApexApiLoader extends MetadataLoader {
 					customMetadataRecord.fullName = typeDevName + '.' + strippedLabel;
 					customMetadataRecord.label = (String) csRecord.get(AppConstants.CS_NAME_ATTRIBUTE);
 				}
-				for (String fieldName : mappingInfo.getCSToMDT_fieldMapping().keySet()) {
-					Schema.DescribeFieldResult descCSFieldResult = descFieldResultMap.get(fieldName.toLowerCase());
+				for (String fieldName : mappingInfo.getCSToMDTFieldMapping().keySet()) {
+					Schema.DescribeFieldResult descCSFieldResult = descFieldResultMap.get(fieldName.toLowerCase()); // NOPMD // TODO: Check if this line is needed
 
-					if (mappingInfo.getCSToMDT_fieldMapping().get(fieldName).endsWith('__c')) {
+					if (mappingInfo.getCSToMDTFieldMapping().get(fieldName).endsWith('__c')) {
 						Metadata.CustomMetadataValue cmv = new Metadata.CustomMetadataValue();
-						cmv.field = mappingInfo.getCSToMDT_fieldMapping().get(fieldName);
+						cmv.field = mappingInfo.getCSToMDTFieldMapping().get(fieldName);
 						cmv.value = csRecord.get(fieldName);
 						customMetadataRecord.values.add(cmv);
 					}
@@ -120,6 +120,7 @@ public with sharing class MetadataApexApiLoader extends MetadataLoader {
 		public Metadata.DeployStatus deployStatus { get; set; }
 		public Boolean success { get; set; }
 
+		@SuppressWarnings('PMD.EmptyStatementBlock')
 		public MetadataDeployStatus() {
 		}
 
@@ -154,6 +155,7 @@ public with sharing class MetadataApexApiLoader extends MetadataLoader {
 			this.mdDeployStatus = mdDeployStatus;
 		}
 
+		@SuppressWarnings('PMD.EmptyStatementBlock')
 		public MetadataDeployCallback() {
 		}
 

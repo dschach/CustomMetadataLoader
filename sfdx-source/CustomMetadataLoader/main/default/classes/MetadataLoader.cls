@@ -118,7 +118,7 @@ public virtual with sharing class MetadataLoader {
 			return;
 		}
 	}
-
+	@SuppressWarnings('PMD.EmptyStatementBlock')
 	public virtual void migrate(MetadataMappingInfo mappingInfo) {
 	}
 

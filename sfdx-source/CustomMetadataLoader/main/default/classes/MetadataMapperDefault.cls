@@ -54,7 +54,7 @@ public virtual with sharing class MetadataMapperDefault implements MetadataMappe
 			DescribeSObjectResult objDef = Schema.getGlobalDescribe().get(customSettingApiName).getDescribe();
 			Map<String, SObjectField> fields = objDef.fields.getMap();
 
-			String selectFields = '';
+			//String selectFields = '';
 			for (String fieldName : fields.keySet()) {
 				DescribeFieldResult fieldDesc = fields.get(fieldName).getDescribe();
 				String fieldQualifiedApiName = fieldDesc.getName();
@@ -66,7 +66,7 @@ public virtual with sharing class MetadataMapperDefault implements MetadataMappe
 
 			String selectClause = 'SELECT ' + String.join(srcFieldNames, ', ') + ' ,Name ';
 			String query = selectClause + ' FROM ' + customSettingApiName + ' LIMIT 50000';
-			List<sObject> recordList = Database.query(query);
+			List<sObject> recordList = Database.query(String.escapeSingleQuotes(query));
 
 			mappingInfo.setSrcFieldNames(srcFieldNames);
 			mappingInfo.setRecordList(recordList);
@@ -95,9 +95,9 @@ public virtual with sharing class MetadataMapperDefault implements MetadataMappe
 	 *
 	 * */
 	public virtual void mapSourceTarget() {
-		Map<String, String> csToMDT_fieldMapping = mappingInfo.getCSToMDT_fieldMapping();
+		Map<String, String> csToMDTFieldMapping = mappingInfo.getCSToMDTFieldMapping();
 		for (String fieldName : srcFieldNames) {
-			csToMDT_fieldMapping.put(fieldName, fieldName);
+			csToMDTFieldMapping.put(fieldName, fieldName);
 		}
 	}
 

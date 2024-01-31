@@ -83,7 +83,7 @@ public with sharing class MetadataMapperSimple extends MetadataMapperDefault {
 	}
 
 	public override void mapSourceTarget() {
-		Map<String, String> csToMDTFieldMapping = mappingInfo.getCSToMDT_fieldMapping();
+		Map<String, String> csToMDTFieldMapping = mappingInfo.getCSToMDTFieldMapping();
 		csToMDTFieldMapping.put(csFieldName, mdtFieldName);
 	}
 }
